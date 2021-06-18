@@ -146,7 +146,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dtuotg/static')]
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media'
+MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY' : 'error',
