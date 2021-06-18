@@ -52,7 +52,6 @@ six
 sqlparse
 Twisted
 txaio
-uritemplate3.0
 openpyxl
 mysqlclient
 gunicorn
