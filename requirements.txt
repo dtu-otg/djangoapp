@@ -1,3 +1,4 @@
+sentry
 Django>=3.0,<=3.1
 whitenoise
 asgiref==3.3.1
