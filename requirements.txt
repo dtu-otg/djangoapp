@@ -1,3 +1,4 @@
+wheel
 sentry
 Django
 whitenoise
