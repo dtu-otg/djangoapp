@@ -1,4 +1,5 @@
 wheel
+xmlsec
 sentry
 Django
 whitenoise
