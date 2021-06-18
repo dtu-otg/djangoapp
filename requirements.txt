@@ -1,8 +1,3 @@
-pip
-setuptools
-wheel
-xmlsec
-sentry
 Django
 whitenoise
 asgiref
