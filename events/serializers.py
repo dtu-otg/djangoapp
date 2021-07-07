@@ -1,7 +1,6 @@
 from rest_framework import serializers,status
 from .models import Event,RegistrationEvent
 from user.models import Profile,User
-from base64 import b16encode
 
 class GetEventsSerializer(serializers.ModelSerializer):
     type_event = serializers.SerializerMethodField()
@@ -32,10 +31,10 @@ class GetEventsSerializer(serializers.ModelSerializer):
     def get_owner_image(self, obj):
         prof = Profile.objects.get(owner=obj.owner)
         profimg = prof.image
-        return b16encode(profimg)
+        return profimg.url
 
     def get_event_image(self, obj):
-        return b16encode(obj.image)
+        return obj.image.url
 
     class Meta:
         model = Event
