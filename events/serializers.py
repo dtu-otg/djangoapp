@@ -6,6 +6,7 @@ class GetEventsSerializer(serializers.ModelSerializer):
     type_event = serializers.SerializerMethodField()
     owner = serializers.SerializerMethodField()
     registered = serializers.SerializerMethodField()
+    owner_image = serializers.SerializerMethodField()
 
 
     def get_registered(self,obj):
@@ -26,9 +27,14 @@ class GetEventsSerializer(serializers.ModelSerializer):
         else:
             return 'Social'
 
+    def get_owner_image(self, obj):
+        prof = Profile.objects.get(owner=obj.owner)
+        profimg = prof.image
+        return profimg
+
     class Meta:
         model = Event
-        fields = ('id','owner','name','date_time','type_event','registered')
+        fields = ('id','owner','name','date_time','type_event','registered', 'owner_image', 'image')
 
 class RegistrationEventSerializer(serializers.Serializer):
     username = serializers.CharField(required=True)
