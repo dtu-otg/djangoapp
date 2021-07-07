@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     'whitenoise.runserver_nostatic'
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -145,8 +146,15 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dtuotg/static')]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
+DEFAULT_FILE_STORAGE = 'dtuotg.custom_azure.AzureMediaStorage'
+MEDIA_LOCATION = "media"
+
+AZURE_ACCOUNT_NAME="dtuotgstorage"
+AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+#MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MEDIA_URL = '/media/'
 
 REST_FRAMEWORK = {
     'NON_FIELD_ERRORS_KEY' : 'error',
