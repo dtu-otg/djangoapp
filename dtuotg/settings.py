@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     #installed
     'rest_framework',
     'drf_yasg',
-    'whitenoise.runserver_nostatic'
+    # 'whitenoise.runserver_nostatic'
     'storages',
 ]
 
@@ -64,7 +64,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'dtuotg.urls'
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 TEMPLATES = [
     {
@@ -142,15 +142,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dtuotg/static')]
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'dtuotg/static')]
 
 DEFAULT_FILE_STORAGE = 'dtuotg.custom_azure.AzureMediaStorage'
+STATICFILES_STORAGE = 'dtuotg.custom_azure.AzureStaticStorage'
+
+STATIC_LOCATION= "static"
 MEDIA_LOCATION = "media"
 
 AZURE_ACCOUNT_NAME="dtuotgstorage"
 AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
+STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{STATIC_LOCATION}/'
+
 MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
 
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
