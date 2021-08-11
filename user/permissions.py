@@ -15,7 +15,7 @@ class ForbiddenHosting(APIException):
     status_code = status.HTTP_403_FORBIDDEN
     default_detail = {
         'status' : "FAILED",
-        'error':'You do not have hosting priveleges'
+        'error':'You do not have hosting privileges'
     }
 
 class ForbiddenAdmin(APIException):

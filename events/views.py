@@ -1,11 +1,11 @@
 from rest_framework import generics,status,permissions,views,response,mixins
 from user.permissions import *
-from .models import Event,RegistrationEvent
+from .models import *
 from django.db.models import Q
 from .serializers import *
 from user.models import User
 from rest_framework.parsers import MultiPartParser,FormParser
-
+from user.utils import Util
 
 class GetEventsView(generics.ListAPIView):
     serializer_class = GetEventsSerializer
@@ -79,13 +79,12 @@ class CreateEventView(generics.CreateAPIView):
         data['user'] = self.request.user.username
         return data
 
-    def post(self,request):
-        data = request.data
-        serializer = CreateEventSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return response.Response({"status" : 'OK','result' :"New event created"},status=status.HTTP_200_OK)
-        return response.Response(serializer.errors)
+    # def post(self,request):
+    #     data = request.data
+    #     serializer = CreateEventSerializer(data=data)
+    #     if serializer.is_valid():
+    #         return response.Response({"status" : 'OK','result' :"New event created"},status=status.HTTP_200_OK)
+    #     return response.Response(serializer.errors)
 
 class EventDetailsView(generics.RetrieveAPIView):
     permission_classes = [AuthenticatedActivated]
@@ -97,3 +96,58 @@ class EventDetailsView(generics.RetrieveAPIView):
         data = super().get_serializer_context(**kwargs)
         data['user'] = self.request.user.username
         return data
+    
+class EventsUpdateView(generics.UpdateAPIView):
+    permission_classes = [AuthenticatedActivated]
+    serializer_class = CreateEventSerializer
+    parser_classes = [MultiPartParser,FormParser]
+    queryset = Event.objects.all()
+    lookup_field = 'id'
+    
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+    
+class EventsDeleteView(generics.DestroyAPIView):
+    permission_classes = [AuthenticatedActivated]
+    serializer_class = CreateEventSerializer
+    parser_classes = [MultiPartParser,FormParser]
+    queryset = Event.objects.all()
+    lookup_field = 'id'
+    
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+    
+    
+    
+class ReportEvents(generics.GenericAPIView):
+    permission_classes = [AuthenticatedActivated]
+    serializer_class = ReportEventsSerializer
+    parser_classes = [MultiPartParser,FormParser]
+    
+    def post(self,request):
+        data = request.data
+        id = data.get('id',None)
+        if id == None:
+            return response.Response({"status" : 'Failed','result' :"Event id is not provided"},status=status.HTTP_400_BAD_REQUEST)
+        if not Event.objects.filter(id=id).exists():
+            return response.Response({"status" : 'Failed','result' :"Event with the given id does not exist"},status=status.HTTP_400_BAD_REQUEST)
+        here = Event.objects.get(id = id)
+        if not Reports.objects.filter(event = here).exists():
+            temp = Reports.objects.create(event = here,count = 0)
+            temp.save()
+            return response.Response({"status" : 'OK','result' : "Report has been submitted"},status=status.HTTP_200_OK)
+        temp = Reports.objects.get(event = here)
+        temp.count += 1
+        temp.save()
+        if temp.count >= 10 : 
+            email_body = {}
+            email_body['username'] = temp.event.owner.username
+            email_body['email'] = temp.event.owner.email
+            email_body['message'] = 'Your event has been deleted to due widespread reporting'
+            data = {'email_body': email_body, 'to_email': temp.event.owner.email,
+                    'email_subject': 'Event widely reported'}
+            here.delete()
+            Util.send_report(data)
+        return response.Response({"status" : 'OK','result' : "Report has been submitted"},status=status.HTTP_400_BAD_REQUEST)
+    
+    

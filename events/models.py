@@ -1,5 +1,4 @@
 from django.db import models
-from rest_framework.fields import _UnvalidatedField
 from user.models import User,Profile
 from django.utils.translation import gettext_lazy as _
 
@@ -34,3 +33,10 @@ class RegistrationEvent(models.Model):
     def __str__(self):
         return self.user.username + "'s registration for " + self.event.name
     
+    
+class Reports(models.Model):
+    event = models.ForeignKey(to=Event,on_delete=models.CASCADE)
+    count = models.IntegerField(default = 0)
+    
+    def __str__(self):
+        return self.event.name + "'s Report Count"
