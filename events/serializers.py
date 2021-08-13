@@ -2,6 +2,12 @@ from rest_framework import serializers,status
 from .models import Event,RegistrationEvent
 from user.models import Profile,User
 
+
+class SpecialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('image',)
+    
 class GetEventsSerializer(serializers.ModelSerializer):
     type_event = serializers.SerializerMethodField()
     owner = serializers.SerializerMethodField()
@@ -27,7 +33,8 @@ class GetEventsSerializer(serializers.ModelSerializer):
             return 'Social'
     
     def get_owner_pic(self,obj):
-        return Profile.objects.get(owner = User.objects.get(username = obj.owner.username)).image
+        here = SpecialSerializer(Profile.objects.get(owner = User.objects.get(username = obj.owner.username)))
+        return here.data
     class Meta:
         model = Event
         fields = ('id','owner','name','date_time','type_event','registered','owner_pic','image',)

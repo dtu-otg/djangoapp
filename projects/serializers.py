@@ -3,6 +3,11 @@ from .models import Project
 from user.models import Profile,User
 
 
+class SpecialSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = ('image',)
+
 
 class CreateProjectSerializer(serializers.ModelSerializer):
     name = serializers.CharField(required=True)
@@ -19,7 +24,8 @@ class GetProjectSerializer(serializers.ModelSerializer):
     owner_pic = serializers.SerializerMethodField()
     
     def get_owner_pic(self,obj):
-        return Profile.objects.get(owner = User.objects.get(username = obj.owner.username)).image
+        here = SpecialSerializer(Profile.objects.get(owner = User.objects.get(username = obj.owner.username)))
+        return here.data
     def get_owner(self,obj):
         username = obj.owner.username
         return username

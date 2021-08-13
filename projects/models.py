@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 def upload_to(instance,filename):
-    return 'events/{filename}'.format(filename=filename)
+    return 'projects/{filename}'.format(filename=filename)
 
 class Project(models.Model):
     owner = models.ForeignKey(to=User,on_delete=models.CASCADE)
