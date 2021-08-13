@@ -19,7 +19,7 @@ class GetProjectSerializer(serializers.ModelSerializer):
     owner_pic = serializers.SerializerMethodField()
     
     def get_owner_pic(self,obj):
-        return Profile.objects.get(username = obj.owner.username).image
+        return Profile.objects.get(owner = User.objects.get(username = obj.owner.username)).image
     def get_owner(self,obj):
         username = obj.owner.username
         return username
