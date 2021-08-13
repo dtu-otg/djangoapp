@@ -25,7 +25,7 @@ class GetProjectSerializer(serializers.ModelSerializer):
     
     def get_owner_pic(self,obj):
         here = SpecialSerializer(Profile.objects.get(owner = User.objects.get(username = obj.owner.username)))
-        return here.data
+        return here.data['image']
     def get_owner(self,obj):
         username = obj.owner.username
         return username
