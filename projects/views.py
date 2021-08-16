@@ -25,7 +25,7 @@ class CreateProjectView(generics.CreateAPIView):
 
 
 class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [AuthenticatedActivated, IsOwner]
+    permission_classes = [AuthenticatedActivated]
     parser_classes = [MultiPartParser,FormParser]
     serializer_class = CreateProjectSerializer 
     lookup_field = "id"
