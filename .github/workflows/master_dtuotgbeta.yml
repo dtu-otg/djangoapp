@@ -2,7 +2,7 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 # More info on Python, GitHub Actions, and Azure App Service: https://aka.ms/python-webapps-actions
 
-name: Build and deploy Python app to Azure Web App - dtuotg
+name: Build and deploy Python app to Azure Web App - dtuotgbeta
 
 on:
   push:
@@ -57,6 +57,6 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'dtuotg'
+          app-name: 'dtuotgbeta'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_502ef03c377c4fd1988a523d4a3cd25d }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_89a5d5156c6b49168554080abc90c479 }}
