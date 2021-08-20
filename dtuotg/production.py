@@ -29,10 +29,14 @@ hostname = os.environ['DBHOST']
 # which we construct using the DBHOST value.
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'sql_server.pyodbc',
         'NAME': os.environ['DBNAME'],
-        'HOST': hostname + ".postgres.database.azure.com",
+        'HOST': hostname + ".database.windows.net",
         'USER': os.environ['DBUSER'] + "@" + hostname,
-        'PASSWORD': os.environ['DBPASS'] 
-    }
+        'PASSWORD': os.environ['DBPASS'] ,
+        'PORT':'',
+        'OPTIONS': {
+            'driver': "ODBC Driver 13 for SQL Server",
+        },
+    },
 }

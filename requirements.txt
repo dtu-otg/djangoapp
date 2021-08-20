@@ -56,3 +56,4 @@ openpyxl
 mysqlclient
 gunicorn
 dj-database-url
+django-pyodbc-azure
