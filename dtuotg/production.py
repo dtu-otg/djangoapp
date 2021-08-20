@@ -31,12 +31,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'sql_server.pyodbc',
         'NAME': os.environ['DBNAME'],
-        'HOST': hostname + ".database.windows.net",
-        'USER': os.environ['DBUSER'] + "@" + hostname,
-        'PASSWORD': os.environ['DBPASS'] ,
-        'PORT':'',
+        'HOST': hostname + '.database.windows.net',
+        'USER': os.environ['DBUSER'] + '@' + hostname,
+        'PASSWORD': os.environ['DBPASS'],
+        'PORT': '',
         'OPTIONS': {
-            'driver': "ODBC Driver 13 for SQL Server",
-        },
-    },
+            'driver': 'ODBC Driver 13 for SQL Server'
+        }
+    }
 }
