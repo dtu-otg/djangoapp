@@ -57,4 +57,4 @@ mysqlclient
 gunicorn
 dj-database-url
 pyodbc
-django-pyodbc-azure
+django-mssql-backend
