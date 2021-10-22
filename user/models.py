@@ -40,6 +40,7 @@ class User(AbstractBaseUser,PermissionsMixin):
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    is_cr = models.BooleanField(default=False)
     can_host = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now = True)
@@ -47,6 +48,7 @@ class User(AbstractBaseUser,PermissionsMixin):
         max_length=255, blank=False,
         null=False, default='email')
     code = models.CharField(max_length = 6,blank = True,null=True)
+    batch_cr = models.CharField(max_length=9, blank=True, null=True)
     time_code = models.DateTimeField(blank=True,null=True)
     USERNAME_FIELD = 'username'
     invites_sent = models.IntegerField(default=0)
