@@ -20,7 +20,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.conf import settings
 from django.conf.urls.static import static
-from timetable.views import TimeTableView
+from timetable.views import CourseListView, TTFormView
 from drf_yasg.generators import OpenAPISchemaGenerator
 
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
@@ -50,7 +50,9 @@ urlpatterns = [
     path('events/',include('events.urls')),
     path('projects/',include('projects.urls')),
     path('social_auth/',include('social_auth.urls')),
-    path('timetable/', TimeTableView.as_view(), name='timetable'),
+    # path('timetable/', TimeTableView.as_view(), name='timetable'),
+    path('ttlist/', CourseListView.as_view(), name='ttlist'),
+    path('ttform/', TTFormView.as_view(), name='ttform'),
     path('', schema_view.with_ui('swagger',
                                  cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc',

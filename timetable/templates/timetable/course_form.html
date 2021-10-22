@@ -1,0 +1,24 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TT Form</title>
+  <link rel="stylesheet" href="{% static 'timetable/form.css' %}">
+
+</head>
+    <body>
+        <h1 class="heading">TimeTable Form</h1>
+        <form action="/ttform/" method="post">
+            {% csrf_token %}
+            <table>
+            {{ form.as_table }}
+            {{ slots.as_table }}
+            </table>
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>

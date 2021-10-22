@@ -1,0 +1,18 @@
+{% load static %}
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TT List</title>
+
+</head>
+    <body>
+        <h1 class="heading">TimeTable List</h1>
+        {% for course in object_list %} 
+         <li>{{ course.prof_mail}} </li>
+        {% endfor %}
+    </body>
+</html>
