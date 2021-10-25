@@ -15,6 +15,6 @@ from django.core.wsgi import get_wsgi_application
 # on Azure App Service and should use the production settings in production.py.
 settings_module = "dtuotg.production" if 'WEBSITE_HOSTNAME' in os.environ else 'dtuotg.settings'
 #os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dtuotg.settings')
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings_module)
 
 application = get_wsgi_application()
