@@ -17,6 +17,7 @@ from django.urls import reverse
 import random
 from datetime import datetime,timedelta
 from projects.models import *
+from projects.serializers import SpecialSerializer
 
 class RegisterSerializer(serializers.ModelSerializer):
     password = serializers.CharField(max_length=68,min_length=6,write_only=True)
@@ -202,9 +203,11 @@ class ProfileViewSerializer(serializers.ModelSerializer):
             return ans
         for ele in Project.objects.filter(owner = User.objects.get(username = user)):
             here = {}
+            temp = SpecialSerializer(ele)
             here['id'] = ele.id
             here['name'] = ele.name
             here['description'] = ele.description
+            here['image'] = temp.data['image']
             ans.append(here)
         return ans
     
